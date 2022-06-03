@@ -1,6 +1,6 @@
 import { useState } from "react";
 import '../assets/DisplayTask.css';
-
+import { Checkbox } from "@mui/material";
 type Task = {
     todo:string,
     completed:boolean,
@@ -42,18 +42,21 @@ export default function DisplayTask({addTask,setAddTask}:taskType){
                     return(
                         <div key = {index} className = "todoStyle">
                             <div className = "todoDisplay">
-                             <input type = "checkbox" onClick = {()=>{handleComplete(task,task.completed)}} className = "checked" disabled = {task.edit}></input> 
+                            <Checkbox
+                            onClick={()=>{handleComplete(task,task.completed)}} 
+                            className = "checked" 
+                            disabled = {task.edit} 
+                            checked = {task.completed}
+                            />
                              {task.completed ? <input type="text" value={task.todo}  className = 'completedTask' disabled = {task.completed}/> : <input type = "text" value={task.todo} className = {task.edit ? 'displayEdit':'displayTask'} onChange = {(event)=>handleUpdate(event,task)} readOnly = {!task.edit}/>}
-                             <button type="submit" disabled = {task.completed || task.edit} onClick={() => handleDelete(index)}>x</button>
-                             <button type = "submit" disabled = {task.completed} onClick = {()=>handleEdit(task,task.edit)}>{task.edit ? 'SAVE' : 'EDIT'}</button>
+                             <button type="submit" disabled = {task.completed || task.edit} className = {task.completed ? 'check' : ''} onClick={() => handleDelete(index)} >x</button>
+                             <button type = "submit" disabled = {task.completed} onClick = {()=>handleEdit(task,task.edit)} className = {task.completed ? 'check' : ''}>{task.edit ? 'SAVE' : 'EDIT'}</button>
                             </div>
                         </div>
-                        
                     )
                 })                
             }
-            <p className="completeCount">DONE : {count}</p>
-            {console.log(addTask)}
+             <div className="completeCount">DONE : {count}</div>
         </>
     )
 }

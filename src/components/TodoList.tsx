@@ -1,9 +1,7 @@
 import { useState } from "react";
 import DisplayTask from './DisplayTask';
 import '../assets/TodoList.css';
-import {TextField} from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
-import Fab from '@mui/material/Fab';
+import { Button } from "@mui/material";
 import React from 'react';
 
 type AddTaskType = {
@@ -33,19 +31,14 @@ const App = () => {
    
     return (
         <div className = "todo">
-            <h1>TODO LIST</h1>
-            <TextField
-            id="outlined-textarea"
-            label="Enter a task"
-            value = {task}
-            onChange={handleTask}
-            className = "taskBox"
-            multiline
-            />
-            <Fab color="primary" aria-label="add" type = "submit" sx = {{marginLeft : '10px'}} onClick = {handleAddTask} >
-                <AddIcon  />
-            </Fab>
-            <DisplayTask addTask = {addTask} setAddTask = {setAddTask}  />
+            <h2>THINGS TO DO:</h2>
+            {(addTask.length === 0) ? <p className="para">Looks Like You are absolutely free today</p> :
+            <DisplayTask addTask = {addTask} setAddTask = {setAddTask}  />}
+            <form onSubmit={handleAddTask}>
+            <input type = "text" placeholder = "Enter New Task" value = {task} onChange={handleTask} required/>
+            <Button variant="contained" type = "submit" sx = {{marginLeft:'30px',height: '45px'}}>Add Task</Button>
+            
+            </form>
         </div>
     );
 };
